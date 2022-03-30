@@ -18,7 +18,8 @@ import Paper from '@mui/material/Paper';
 import { Toolbar, AppBar,  Container,
   Grid,Typography } from '@material-ui/core';
   import { TextField } from '@material-ui/core';
-
+import { Formik, Form } from 'formik';
+import axios from 'axios';
 import { Button } from '@material-ui/core';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -83,7 +84,7 @@ const Bots = () => {
      });
      const classes = useStyles();
       const info =  useSWR<Bot[]>(`auth/bot`,fetcher);
-      console.log(info)
+      
     const fetchItems = async () => {
       
         const data = await fetch(`${process.env.REACT_APP_API_URL}/auth/bot`);
@@ -97,13 +98,13 @@ const Bots = () => {
           Date_Started:
          */}
         const items = await data.json();
-        console.log(items)
+       
         setItems(items);
-        console.log("Items Are");
-        console.log(items)
+        {/*console.log("Items Are");
+        console.log(items)*/}
         setRows(items)
     };
-
+   
   return (
 
             <div className="App">
@@ -124,25 +125,49 @@ const Bots = () => {
     <Grid container>
       <Grid item xs={12}>
         <Container maxWidth="md" >
-         
-       <form>
-         
-      <Grid container spacing={2}>
+            <Formik
+                    initialValues={{
+                        comission_address: '3232',
+                        comission_percentage:'3223'
+               }}       
+              onSubmit ={ async  (values, actions) => 
+              {
+                console.log(values);  
+               const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/comission/`, values)
+                .then(function (res)
+                 {
+                   if( res.data.success == false)
+                   {
+                     alert("Bot Not Started, Try Changing the Name")
+                   }
+                })
+                .catch(function (err) {
+                  console.error('There was an error!', err);
+                });
+                setTimeout(() => {
+                  actions.setSubmitting(false);
+                }, 1000);
+               console.log(response)
+              }}
+            >
+       <Form>
+        <Grid container spacing={2}>
                   <Grid item xs={12}>
                       <TextField
-                        name="Commission_Address"
+                        name="comission_address"
                         label="Commission address"
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        name="Commission_Percentage"
+                        name="comission_percentage"
                         label="Commission Percentage"
                       />
                     </Grid>  
                 <Button type="submit" variant="contained" color="primary">Update</Button>
           </Grid>
-          </form>
+        </Form>
+          </Formik>
          </Container>
         </Grid>
       </Grid>
