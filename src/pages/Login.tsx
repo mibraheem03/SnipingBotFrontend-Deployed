@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import authSlice from "../store/slices/auth";
 import axios from "axios";
 import { useHistory } from "react-router";
-import {Link } from "react-router-dom";
 import '../App.css';
 import { Toolbar, AppBar, Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
@@ -13,12 +12,10 @@ import { Button } from '@material-ui/core';
 function Login() {
   
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleLogin = (email: string, password: string) => {
-    console.log("email" + email + " " + password)
      console.log(String(`${process.env.REACT_APP_API_URL}/auth/login/`+ { email, password }))
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login/`,{
@@ -34,7 +31,7 @@ function Login() {
           })
         );
         dispatch(authSlice.actions.setAccount(res.data.user));
-        setLoading(false);
+      
         history.push("/bots", {
           userId: res.data.id
         });
@@ -44,12 +41,7 @@ function Login() {
         setMessage("Unable to login");
       });
   };
-  const configButton = {
-    variant: 'contained',
-    color: 'primary',
-    fullWidth: true,
-    onClick: handleLogin
-  }
+
 
   const formik = useFormik({
     initialValues: {
@@ -57,7 +49,7 @@ function Login() {
       password: "",
     },
     onSubmit: (values) => {
-      setLoading(true);
+     
       handleLogin(values.email, values.password);
     },
     validationSchema: Yup.object({

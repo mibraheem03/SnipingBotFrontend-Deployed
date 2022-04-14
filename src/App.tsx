@@ -11,12 +11,10 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <Router>
-       
             <Switch>
               <Route exact path="/" component={Login} />
               <ProtectedRoute exact path="/bots" component={Bots} />
             </Switch>
-         
         </Router>
       </PersistGate>
     </Provider>
