@@ -19,8 +19,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Toolbar, AppBar,  Container,
   Grid,Typography } from '@material-ui/core';
-  import { TextField } from '@material-ui/core';
-import { Formik, Form } from 'formik';
+  import Textfield from '../FormsUI/Textfield';
+import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { Button } from '@material-ui/core';
 import ProtectedRoute from "../routes/ProtectedRoute";
@@ -84,19 +84,6 @@ const Bots = () => {
         fetchItems();
     }, []);
      const [items, setItems] = useState<Bot[] | null>(null);
-
-    
-    const useStyles = makeStyles({
-      close: {
-     
-       "&:hover": 
-       {
-        color: "red",
-       }
-      }
-     });
-     const classes = useStyles();
-      const info =  useSWR<Bot[]>(`auth/bot`,fetcher);
       
     const fetchItems = async () => {
       
@@ -130,10 +117,7 @@ const Bots = () => {
         </AppBar>
           <div className="bot-wrapper">
             <div className="bot-inner">  
-              
-              <Typography variant="h6" >
-              Commission Settings
-            </Typography>
+          
         <Grid container>
           <Grid item xs={12}>
             <Container maxWidth="md" >
@@ -145,10 +129,10 @@ const Bots = () => {
                   onSubmit ={ async  (values, actions) => 
                   {
                     console.log(JSON.stringify(values));  
-                    const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/comission/`, values)
+                    axios.post(`${process.env.REACT_APP_API_URL}/auth/comission/`, values)
                     .then(function (res)
                     {
-                      
+                       console.log(res)
                     })
                     .catch(function (err) {
                       console.error('There was an error!', err);
@@ -156,26 +140,40 @@ const Bots = () => {
                     setTimeout(() => {
                       actions.setSubmitting(false);
                     }, 1000);
-                  console.log(response)
+                 
                   }}
                 >
           <Form>
+                <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                        <Typography variant="h6" >
+                                    Commission Settings
+                         </Typography>
+                    </Grid>
+                </Grid>
             <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                          <TextField
+                      <Grid item xs={4}>
+                          <Textfield
                             name="comission_address"
                             label="Commission address"
 
                           />
                         </Grid>
-                        <Grid item xs={12}>
-                          <TextField
+                        </Grid>
+                          <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                          <Textfield
                             name="comission_percentage"
                             label="Commission Percentage"
                           />
                         </Grid>  
-                    <Button type="submit" variant="contained" color="primary">Update</Button>
-              </Grid>
+                  
+              </Grid> 
+              <Grid container spacing={2}>
+                 <Grid item xs={4}>
+                <Button type="submit" variant="contained" color="primary">Update</Button> 
+                </Grid>
+                </Grid>
             </Form>
               </Formik>
             </Container>

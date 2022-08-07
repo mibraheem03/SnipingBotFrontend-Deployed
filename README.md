@@ -1,3 +1,6 @@
+
+# Sniping Bot Frontend React UI
+
 ## Available Scripts
 
 In the project directory, you can run:

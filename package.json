@@ -30,24 +30,16 @@
     "redux": "^4.1.0",
     "redux-persist": "^6.0.0",
     "swr": "^1.0.1",
-   
     "web-vitals": "^1.0.1",
     "yup": "^0.32.9",
- 
     "@material-ui/core": "^4.12.3",
     "@mui/core": "^5.0.0-alpha.53",
     "@mui/icons-material": "^5.0.5",
-    
-     "react-bootstrap": "^2.0.2",
-     "typescript": "^4.5.5",
-      "@mui/material": "latest",
+    "react-bootstrap": "^2.0.2",
+    "typescript": "^4.5.5",
+    "@mui/material": "latest",
     "@emotion/styled": "latest",
     "@emotion/react": "latest"
-
-     
-     
-
-    
   },
   "scripts": {
     "start": "craco start",
@@ -77,6 +69,6 @@
     "autoprefixer": "9",
     "postcss": "7",
     "prettier": "2.3.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   }
 }
